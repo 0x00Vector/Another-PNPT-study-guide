@@ -24,12 +24,12 @@ Nmap done: 1 IP address (1 host up) scanned in 6.66 seconds
 ```
 ## 2. Port 80 & 8080
 ### 80 [HTTP](networking/protocols/HTTP.md)
-![](nested-repos/PNPT-study-guide/PNPT-pics/dev-1.png)
+![](/PNPT-pics/dev-1.png)
 ![](/PNPT-pics/dev-1.png)
 #### Findings:
 Default page for Bolt CMS.
 ### Port 8080
-![](nested-repos/PNPT-study-guide/PNPT-pics/dev-2.png)
+![](/PNPT-pics/dev-2.png)
 ![](/PNPT-pics/dev-2.png)
 #### Findings:
 `phpinfo()` page which proves [PHP](coding/languages/PHP.md) is *being executed at this endpoint*. `phpinfo()` itself also gives up a *lot of information about the target*:
@@ -126,7 +126,7 @@ MSG      0.000 feroxbuster::heuristics detected directory...
 ```
 There are a lot of findings, but some especially tasty ones are:
 #### http://10.0.2.7/app
-![](nested-repos/PNPT-study-guide/PNPT-pics/dev-3.png)
+![](/PNPT-pics/dev-3.png)
 ![](/PNPT-pics/dev-3.png)
 At this endpoint we find an entire directory listing. There is many a tasty morsel along these paths, but here are some especially good ones:
 ##### /app/config/config.yml
@@ -224,12 +224,12 @@ MSG      0.000 feroxbuster::heuristics detected directory listing: http://10.0.2
 ```
 #### /dev
 This brings us to a Bolt dashboard:
-![](nested-repos/PNPT-study-guide/PNPT-pics/dev-9.png)
+![](/PNPT-pics/dev-9.png)
 ![](/PNPT-pics/dev-4.png)
 From here there are some tabs we can peruse including `Admin`, `Register`, and `Setup`. We will come back to this.
 ##### /dev/config
 This brings us to another directory listing similar to `:80/app` but this time it's not as deep:
-![](nested-repos/PNPT-study-guide/PNPT-pics/dev-5.png)
+![](/PNPT-pics/dev-5.png)
 ![](/PNPT-pics/dev-5.png)
 ## 5. 8080 Dashboard
 Coming back to the dashboard we discovered at `http://10.0.2.7:8080/dev`, let's see what we can do from here.
@@ -254,15 +254,15 @@ If we go to the `Register` tab our URL changes slightly, revealing more about th
 ```
 http://10.0.2.7:8080/dev/index.php?p=action.register
 ```
-![](nested-repos/PNPT-study-guide/PNPT-pics/dev-6.png)
+![](/PNPT-pics/dev-6.png)
 ![](/PNPT-pics/dev-6.png)
 Now we can see that the `p` parameter can be set to an action, such as `register`. Let's try `action.login`:
-![](nested-repos/PNPT-study-guide/PNPT-pics/dev-7.png)
+![](/PNPT-pics/dev-7.png)
 ![](/PNPT-pics/dev-7.png)
 Just by changing the action, we've rendered an entirely new page.
 
 Since we're being given the option to register, let's see if we gain more access by doing so.
-![](nested-repos/PNPT-study-guide/PNPT-pics/dev-8.png)
+![](/PNPT-pics/dev-8.png)
 ![](/PNPT-pics/dev-8.png)
 Nothing much has changed, except that we're 'logged in'. Maybe there are some other actions we can take advantage of in the URL?
 ### Bolt Documentation
@@ -340,7 +340,7 @@ DirectoryIndex index.php
 </IfModule>
 ```
 Since this file handles access and configuration, let's see if we can find it.
-![](nested-repos/PNPT-study-guide/PNPT-pics/dev-10.png)
+![](/PNPT-pics/dev-10.png)
 ![](/PNPT-pics/dev-10.png)
 
 Looks like we can't directly access it, but the error here *suggests we found the right path.*
@@ -354,7 +354,7 @@ If we try to access `/public` with the browser we find nothing, except that our 
 At the bottom of this page, there are links to "Troubleshooting 'Outside of the web root'". Let's click it.... it goes no where, so let's search it ourselves.
 
 We find the Bolt CMS troubleshooting page for this issue [here](https://docs.boltcms.io/3.7/howto/troubleshooting-outside-webroot), and right away we get info on how the app is meant to be structured:
-![](nested-repos/PNPT-study-guide/PNPT-pics/dev-13.png)
+![](/PNPT-pics/dev-13.png)
 ![](/PNPT-pics/dev-13.png)
 
 The paths that get us things (but not super tasty things) are:
@@ -485,13 +485,13 @@ Since Ports 80 & 8080 seem the most vulnerable, let's explore some exploits for 
 - `searchsploit php | grep linux`: lots of results, but none that are very tasty.
 #### `searchsploit Bolt`
 This search returns a few results. We're looking for Bolt v3.7 and there is one which looks promising:
-![](nested-repos/PNPT-study-guide/PNPT-pics/dev-14.png)
+![](/PNPT-pics/dev-14.png)
 ![](/PNPT-pics/dev-14.png)
 
 Finding this exploit on [Exploit DB](https://www.exploit-db.com/exploits/48296) we can peruse the code, written in [python](coding/languages/python.md). It appears that if you're authenticated to BoltCMS, you're able to take advantage of their routing system to achieve RCE via an injection into a URL containing `/files/test{}.php?test=<injection>`.
 
 We *have a user which we registered* so let's attempt this while authenticated as that user:
-![](nested-repos/PNPT-study-guide/PNPT-pics/dev-15.png)
+![](/PNPT-pics/dev-15.png)
 ![](/PNPT-pics/dev-15.png)
 
 **BOOM** using the hints from the exploit DB script, we've discovered we can leverage the PHP parameters to traverse and see the filesystem. From here we can see all the user and the groups they're in.

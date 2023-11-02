@@ -37,7 +37,7 @@ This site can be used to find subdomains deeper even than the second and third l
 A free online tool which you can use to discover hosts r/t a domain. Also includes hosting IP block, DNS servers, MX Records, TXT Records, etc.. 
 
 You can also get a map of the domain and subdomains like this:
-![](/nested-repos/PNPT-study-guide/PNPT-pics/hunting-subdomains-1.png)
+![](//PNPT-pics/hunting-subdomains-1.png)
 ![](/PNPT-pics/hunting-subdomains-1.png)
 
 > [!Resources]

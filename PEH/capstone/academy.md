@@ -176,24 +176,24 @@ ffuf -w /usr/share/wordlists/rockyou.txt:FUZZ -u http://10.0.2.15/FUZZ
 Once it's returned the results from that level, you can run it again to enumerate on the next level in. For example, if Fuff found `http://10.0.2.15/academy` w/ the first search, then to enumerate the academy path, you would just change your command to be: `fuff ... -u http://10.0.2.15/academy/FUZZ`.
 ## Logging in
 If we go to `http://10.0.2.15/academy` we get a login page where we can login with our new credentials.
-![](nested-repos/PNPT-study-guide/PNPT-pics/academy-1.png)
+![](/PNPT-pics/academy-1.png)
 ![](/PNPT-pics/academy-1.png)
 Once we're in, one of the interesting tabs we have access to is the `My Profile` tab. Clicking this, we find a form where we can upload a 'student photo'.
-![](nested-repos/PNPT-study-guide/PNPT-pics/academy-2.png)
+![](/PNPT-pics/academy-2.png)
 ![](/PNPT-pics/academy-2.png)
 Besides the photo upload, we can also pentest this for [SQL-injection](cybersecurity/TTPs/exploitation/injection/SQL-injection.md), etc.. However, the simplest place to start is to *use the form like its intended* and investigate from there.
 ## Student Photo Upload
 ### Plain Photo
 Starting w/ a plain photo, let's see what happens:
-![](nested-repos/PNPT-study-guide/PNPT-pics/academy-3.png)
+![](/PNPT-pics/academy-3.png)
 
 ![](/PNPT-study-guide/PNPT-pics/academy-3.png)
 We can see a green success message, as well as our new photo. If we investigate the source, we might be able to figure out where the photo is being loaded from in the HTML:
-![](nested-repos/PNPT-study-guide/PNPT-pics/academy-4.png)
+![](/PNPT-pics/academy-4.png)
 
 ![](/PNPT-pics/academy-4.png)
 The endpoint for the photo is `studentphoto/duck.jpeg`. Let's try to go to that endpoint w/ the browser:
-![](nested-repos/PNPT-study-guide/PNPT-pics/academy-5.png)
+![](/PNPT-pics/academy-5.png)
 
 ![](/PNPT-pics/academy-5.png)
 The fact that we can see our duck in the browser means *the webserver is executing the file*, so we know if we upload some code *it will be executed*.
@@ -339,7 +339,7 @@ root@academy:~#
 Having tried this box *without watching the walkthrough first*, there are some other interesting avenues one could try. The walkthrough above is a combo of my own investigations + the walkthrough supplied by TCM.
 ### mysql
 Once you've SSH'd into the target as Grimmie, you can access the [mysql](CLI-tools/linux/mysql.md) database using the same password.
-![](nested-repos/PNPT-study-guide/PNPT-pics/academy-6.png)
+![](/PNPT-pics/academy-6.png)
 ![](/PNPT-pics/academy-6.png)
 Some tasty tables in here include: `db` and `user`, both of which give you access to credentials.
 

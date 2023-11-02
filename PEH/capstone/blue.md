@@ -61,7 +61,7 @@ Interact with a module by name or index. For example info 4, use 4 or use exploi
 First, we want to use the less invasive module, which is auxiliary. In this case, we can use the SMB scanner `auxiliary/scanner/smb/smb_ms17_010`. To choose this, type `use 3` and it will set the module context for the console.
 
 This module should tell us whether the target is vulnerable to EternalBlue by scanning it. To see what variables we need to set, type `options` and/or `info`:
-![](nested-repos/PNPT-study-guide/PNPT-pics/blue-1.png)
+![](/PNPT-pics/blue-1.png)
 ![](/PNPT-study-guide/PNPT-pics/blue-1.png)
 Set `RHOSTS` to our target using `set rhosts <target IP>`. Now we can type `run` to scan the target:
 ```bash
@@ -101,7 +101,7 @@ meterpreter > whoami
 ## Manual Exploitation
 Instead of using Metasploit, we can find a way to use EternalBlue ourselves:
 ### Searchsploit
-![](nested-repos/PNPT-study-guide/PNPT-pics/blue-2.png)
+![](/PNPT-pics/blue-2.png)
 ![](/PNPT-pics/blue-2.png)
 Let's go through out searchsploit/ exploit db flow again. Using `searchsploit` we can see that we have three options for exploit code; all three use [python](coding/languages/python.md), all three are for Windows, but only 2 can exploit Windows 7 (our target).
 
@@ -252,7 +252,7 @@ Traceback (most recent call last):
    exploit(TARGET, s...
 ```
 What will likely happen is *this will crash your target machine*:
-![](nested-repos/PNPT-study-guide/PNPT-pics/blue-3.png)
+![](/PNPT-pics/blue-3.png)
 ![](/PNPT-pics/blue-3.png)
 This exploit is *volatile* because it's a [buffer-overflow](cybersecurity/TTPs/exploitation/buffer-overflow.md), and will commonly cause a target to crash. **DON'T USE THIS AGAINST CRITICAL INFRASTRUCTURE** such as targets in hospitals, etc..
 
