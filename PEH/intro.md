@@ -73,10 +73,6 @@ The Debrief also allows the client to ask questions about or challenge your find
 > [!Resources]
 > - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 
-> [!My previous notes (linked in the text)]
-> - [phishing](https://github.com/TrshPuppy/obsidian-notes/tree/main/cybersecurity/TTPs/phishing.md)
-> - [OSINT](https://github.com/TrshPuppy/obsidian-notes/tree/main/cybersecurity/TTPs/recon/OSINT.md)
-
 
 
 
