@@ -1,5 +1,8 @@
 # Capstone
 
+> [!tip] 
+> I highly recommend doing the older capstones first! If you have HackTheBox subscription, there are excellent retired machines available. I advise you doing a few of those in **guided mode**. After that try to root the current machines on your own.
+
 This consists of some intentionally vulnerable machines which would be exploited using our Kali Linux machine:
 
   1. [Blue](#blue)
