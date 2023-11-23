@@ -32,11 +32,11 @@ Optional courses, which may add value, include:
 
 ## Course Notes: 
 
-- [ ] [PEH-Practical Ethical Hacking](/PEH/Practical%20Ethical%20Hacking%20(PEH).md)
-- [ ] Windows Privilege Escalation for Beginners
-- [ ] Linux Privilege Escalation for Beginners
-- [ ] Open-Source Intelligence (OSINT) Fundamentals
-- [ ] External Pentest Playbook
-- [ ] Movement, Pivoting and Persistence
+- [x] PEH-Practical Ethical Hacking
+- [x] Windows Privilege Escalation for Beginners
+- [x] Linux Privilege Escalation for Beginners
+- [x] Open-Source Intelligence (OSINT) Fundamentals
+- [x] External Pentest Playbook
+- [x] Movement, Pivoting and Persistence
 
 ## Special Thanks to TCM Security for packing these courses with tons of value!
