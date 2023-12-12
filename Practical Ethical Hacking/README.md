@@ -17,5 +17,5 @@ Notes for the TCM Security course [Practical Ethical Hacking](https://academy.tc
 11. [Active Directory](Practical%20Ethical%20Hacking/11.%20ActiveDirectory/README.md)
 12. [Post Exploitation](Practical%20Ethical%20Hacking/12.%20PostExploitation/README.md)
 13. [Web App Enumeration](Practical%20Ethical%20Hacking/13.%20WebAppEnum/README.md)
-14. [OWASP Juice Shop](Practical%20Ethical%20Hacking/14.%20OWASPJuiceShop/README.md)
+14. [Find & Exploit Common Web Vulnerabilities](Practical%20Ethical%20Hacking/14.%20CommonWebVulnerabilities/README.md)
 15. [Wireless Penetration Testing](Practical%20Ethical%20Hacking/15.%20WirelessPentest/README.md)
