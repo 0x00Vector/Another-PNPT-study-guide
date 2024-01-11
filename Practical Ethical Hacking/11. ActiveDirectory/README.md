@@ -7,6 +7,7 @@
 
 ![](../images/ad_lab.jpg)
 
+I recommend using this script to build the AD environment. This ensures that the environment will be 1:1 like in the course: [pimpmyadlab](https://github.com/Dewalt-arch/pimpmyadlab)
 ## Introduction
 
 * Active Directory (AD) - Directory service developed by Microsoft to manage Windows domain networks; authenticates using Kerberos tickets.
@@ -248,17 +249,23 @@
   Get-NetGPO | select displayname, whenchanged
   ```
 
+* ldapdomaindump:
+
+  ```shell
+  sudo ldapdomaindump ldaps://dc.ip -u 'MARVEL\fcastle' -p Password1
+  #it is automatically used in the IPv6 relay attack
+  ```
+  
 * Bloodhound: Recon tool for Active Directory environments.
 
-  ```ps
-  powershell -ep bypass
+  ```shell
+  sudo neo4j console
+  #localhost:7687 - default creds: neo4j:neo4j
 
-  . .\SharpHound.ps1
-  #setup Bloodhound
+  sudo bloodhound
 
-  Invoke-BloodHound -CollectionMethod All -Domain MARVEL.local -ZipFileName file.zip
-  #data collection
-  #exports data into zip file
+  sudo bloodhound-python -d MARVEL.local -u fcastle -p Password1 -ns dc.ip -c all
+  #run injestor
   ```
 
   * This zip file can be imported in BloodHound. We can use Pre-Built Analytics Queries to plan further.
