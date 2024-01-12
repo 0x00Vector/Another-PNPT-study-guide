@@ -13,3 +13,9 @@ Before the exam:
 - Install all the tools showed in the PEH course and try them. Or at least pick the tools you want to use and be familiar with them. Easiest is to use *pimpmykali* to install everything necessary.
 - Read through the PEH, OSINT and EPP course notes once more
 - The following boxes taught me something different and were good practice: THM Wreath, THM Holo, HTB Blackfield, HTB Sauna, HTB Forest, HTB Monteverde, HTB Sizzle
+
+During the exam:
+
+- AD - initial attack vectors: LLMNR poisoning, SMBRelay attack, IPv6 attack
+- AD - post compromise enumeration: ldapdomaindump, Bloodhound
+- AD - post compromise attacks: 

