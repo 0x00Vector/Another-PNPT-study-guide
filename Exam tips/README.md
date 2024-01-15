@@ -18,4 +18,13 @@ During the exam:
 
 - AD - initial attack vectors: LLMNR poisoning, SMBRelay attack, IPv6 attack
 - AD - post compromise enumeration: ldapdomaindump, Bloodhound
-- AD - post compromise attacks: 
+- AD - post compromise attacks:
+  - Search the quick wins:
+    - Kerberoasting
+    - Secretsdump
+    - Pass the hash / pass the password
+  - No quick wins? Dig deep!
+    - Enumerate (Bloodhound, etc.)
+    - Where does your account have access?
+    - Old vulnerabilities die hard 
+    - ... Think outside the box 
