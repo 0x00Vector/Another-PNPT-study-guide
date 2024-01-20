@@ -16,6 +16,7 @@ Before the exam:
 
 During the exam:
 
+- OSINT: try password and make password permutations from wordlist and found information
 - AD - initial attack vectors: LLMNR poisoning, SMBRelay attack, IPv6 attack
 - AD - post compromise enumeration: ldapdomaindump, Bloodhound
 - AD - post compromise attacks:

