@@ -4,7 +4,7 @@
   <img src="https://certifications.tcm-sec.com/wp-content/uploads/2021/09/pnpt-new.png" />
 </p>
 
-Notes from all the TCM Courses I took in preparation for the PNPT
+Notes from all the TCM Courses I took in preparation for the PNPT. It contains everything you will need to pass the exam. Read the exam tips section!
 
 ## About the PNPT:
 
@@ -29,14 +29,3 @@ Optional courses, which may add value, include:
 - Windows Privilege Escalation for Beginners
 
 ![403E4B41-E0BB-4246-8E2F-1C898078ECDD_1_105_c](https://user-images.githubusercontent.com/63926014/230752069-e03174fe-af9c-4e5c-8fd4-b0dad38bdc3c.jpeg)
-
-## Course Notes: 
-
-- [x] PEH-Practical Ethical Hacking
-- [x] Windows Privilege Escalation for Beginners
-- [x] Linux Privilege Escalation for Beginners
-- [x] Open-Source Intelligence (OSINT) Fundamentals
-- [x] External Pentest Playbook
-- [x] Movement, Pivoting and Persistence
-
-## Special Thanks to TCM Security for packing these courses with tons of value!
