@@ -10,7 +10,7 @@
 
 * TCP three-way handshake - SYN packet is sent first, then SYN ACK is received, and then ACK is sent.
 
-* ### Diagram
+* TCP three-way handshake Diagram
 ```mermaid
 sequenceDiagram
   participant c as Client
